@@ -2,6 +2,7 @@
 using namespace std;
 
 #include <iostream>
+#include <conio.h>
 
 class Building
 {
@@ -60,8 +61,123 @@ public:
 		cout << "Коэффициент устойчивости: " << stabilityFactor << endl << endl;
 	}
 
+	void initBuilding()
+	{
+		setBuiling(1.0, 1.0, 1.0, 1, 1.0);
+	}
+
 	void inputBuilding()
-	{}
+	{
+		// Защиты от дурака для ввода всех необходимых данных.
+		cout << "Введите длину стороны вашего здания: ";
+		while (!(cin >> sideLength) || sideLength <= 0)
+		{
+			cout << "Неверный ввод длины стороны - она должна быть положительным числом. Попробуйте еще раз: ";
+			cin.clear();
+		}
+
+		cout << "Введите высоту фундамента вашего здания: ";
+		while (!(cin >> basementHeight) || basementHeight <= 0)
+		{
+			cout << "Неверный ввод высоты фундамента - она должна быть положительным числом. Попробуйте еще раз: ";
+			cin.clear();
+		}
+
+		cout << "Введите высоту одного этажа вашего здания: ";
+		while (!(cin >> floorHeight) || floorHeight <= 0)
+		{
+			cout << "Неверный ввод высоты этажа - она должна быть положительным числом. Попробуйте еще раз: ";
+			cin.clear();
+		}
+
+		cout << "Введите количество этажей вашего здания: ";
+		while (!(cin >> floorAmount) || floorAmount <= 0)
+		{
+			cout << "Неверный ввод количества - оно должно быть положительным целым числом. Попробуйте еще раз: ";
+			cin.clear();
+		}
+		// Расчет коэффицента устойчивости.
+		stabilityFactor = (float)(sideLength * sideLength * sqrt(basementHeight)) / (floorHeight * floorAmount);
+		// Если коэффициент устойчивости меньше 1 - здание упадет; необхлдим повторный ввод характеристик
+		if (stabilityFactor < 1.0)
+		{
+			cout << "Коэффициент стабильности вашего здания k = " << stabilityFactor << " меньше единицы. Оно может рухнуть с минуты на минуту. Хотите ли перестроить его?" << endl;
+			cout << "Если НЕТ - нажмите Esc, если ДА - любую другую кнопку." << endl << endl;
+			if (_getch() != 27)
+			{
+				inputBuilding();
+			}
+			else
+			{
+				cout << "Здание не смогло устоять и рухнуло!" << endl << endl << endl;
+				initBuilding();
+			}
+		}
+		else
+		{
+			cout << "Отлично! Здание получилось устойчивым с коэффициентом устойчивости k = " << stabilityFactor << "." << endl << endl << endl;
+		}
+	}
+
+	void addToBuilding(Building build)
+	{
+		cout << "Совмещаем два здания... Их свойства такие:" << endl;
+		cout << "Длины сторон оснований: " << sideLength << " и " << build.sideLength << endl <<
+			"Высоты фундаментов: " << basementHeight << " и " << build.basementHeight << endl << "Высоты этажей: " << floorHeight << " и " << build.floorHeight << endl <<
+			"Количества этажей: " << floorAmount << " и " << build.floorAmount << endl << "Коэффициенты устойчивости: " << stabilityFactor << " и " << build.stabilityFactor << endl << endl;
+
+		if (sideLength < build.sideLength)
+			sideLength = build.sideLength;
+
+		if (basementHeight < build.basementHeight)
+			basementHeight = build.basementHeight;
+
+		if (floorHeight < build.floorHeight)
+			floorHeight = build.floorHeight;
+
+		floorAmount = floorAmount + build.floorAmount;
+		// Расчет нового коэффициента устойчивости и проверка его корректности.
+		stabilityFactor = (float)(sideLength * sideLength * sqrt(basementHeight)) / (floorHeight * floorAmount);
+		if (stabilityFactor < 1)
+		{
+			cout << "К сожалению, после совмещения двух зданий новое здание сразу же развалилось, так как его коэффициент устойчивости k = " << stabilityFactor << " меньше нуля." << endl << endl;
+			initBuilding();
+		}
+		else
+		{
+			cout << "Отлично! Новое здание устояло. Его свойства такие:" << endl << endl;
+			getBuilding();
+		}
+	}
+
+	void addFloors()
+	{
+		unsigned floorsToAdd;
+		// Защита от дурака для ввода floorsToAdd.
+		cout << "Введите количество этажей для добавления к вашему зданию: ";
+		while (!(cin >> floorsToAdd) || floorsToAdd < 0)
+		{
+			cout << "Неверный ввод количества - оно должно быть неотрицательным целым числом. Попробуйте еще раз: ";
+			cin.clear();
+		}
+
+		floorAmount = floorAmount + floorsToAdd;
+		// Расчет нового коэффициента устойчивости и проверка его корректности.
+		stabilityFactor = (float)(sideLength * sideLength * sqrt(basementHeight)) / (floorHeight * floorAmount);
+		if (stabilityFactor < 1.0)
+		{
+			cout << "Коэффициент стабильности вашего здания k = " << stabilityFactor << " стал меньше единицы. Оно может рухнуть с минуты на минуту. Попробуйте изменить количество этажей к добавлению (например, на 0)" << endl << endl;
+			floorAmount = floorAmount - floorsToAdd;
+			addFloors();
+		}
+		else
+		{
+			cout << "Отлично! Здание получилось устойчивым с коэффициентом устойчивости k = " << stabilityFactor << endl << endl;
+		}
+		// Отображение информации о здании.
+		getBuilding();
+	}
+
 
 
 };

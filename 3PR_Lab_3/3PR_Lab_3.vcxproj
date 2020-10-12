@@ -141,6 +141,9 @@
   <ItemGroup>
     <ClInclude Include="mysource.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="3PR_Lab_3.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

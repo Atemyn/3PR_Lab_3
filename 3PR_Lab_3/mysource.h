@@ -4,7 +4,7 @@ using namespace std;
 #include <iostream>
 #include <conio.h>
 
-class Building
+/*class Building
 {
 private:
 	// Длина стороны основания.
@@ -174,4 +174,4 @@ public:
 		getBuilding();
 	}
 
-};
+};*/

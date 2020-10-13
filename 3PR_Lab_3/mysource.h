@@ -1,10 +1,12 @@
 #pragma once
-using namespace std;
 
 #include <iostream>
 #include <conio.h>
+#include <windows.h>
 
-/*class Building
+using namespace std;
+
+class Building
 {
 private:
 	// Длина стороны основания.
@@ -14,7 +16,7 @@ private:
 	// Высота этажа.
 	float floorHeight;
 	// Количество этажей.
-	unsigned floorAmount;
+	int floorAmount;
 	// Коэффициент устойчивости.
 	float stabilityFactor;
 
@@ -48,31 +50,35 @@ public:
 	{
 		// Защиты от дурака для ввода всех необходимых данных.
 		cout << "Введите длину стороны вашего здания: ";
-		while (!(cin >> sideLength) || sideLength <= 0)
+		while (!(cin >> sideLength) || cin.get() != '\n' || sideLength <= 0)
 		{
 			cout << "Неверный ввод длины стороны - она должна быть положительным числом. Попробуйте еще раз: ";
 			cin.clear();
+			rewind(stdin);
 		}
 
 		cout << "Введите высоту фундамента вашего здания: ";
-		while (!(cin >> basementHeight) || basementHeight <= 0)
+		while (!(cin >> basementHeight) || cin.get() != '\n' || basementHeight <= 0)
 		{
 			cout << "Неверный ввод высоты фундамента - она должна быть положительным числом. Попробуйте еще раз: ";
 			cin.clear();
+			rewind(stdin);
 		}
 
 		cout << "Введите высоту одного этажа вашего здания: ";
-		while (!(cin >> floorHeight) || floorHeight <= 0)
+		while (!(cin >> floorHeight) || cin.get() != '\n' || floorHeight <= 0)
 		{
 			cout << "Неверный ввод высоты этажа - она должна быть положительным числом. Попробуйте еще раз: ";
 			cin.clear();
+			rewind(stdin);
 		}
 
 		cout << "Введите количество этажей вашего здания: ";
-		while (!(cin >> floorAmount) || floorAmount <= 0)
+		while (!(cin >> floorAmount) || cin.get() != '\n' || floorAmount <= 0)
 		{
 			cout << "Неверный ввод количества - оно должно быть положительным целым числом. Попробуйте еще раз: ";
 			cin.clear();
+			rewind(stdin);
 		}
 		// Расчет коэффицента устойчивости.
 		stabilityFactor = (float)(sideLength * sideLength * sqrt(basementHeight)) / (floorHeight * floorAmount);
@@ -133,10 +139,11 @@ public:
 		unsigned floorsToAdd;
 		// Защита от дурака для ввода floorsToAdd.
 		cout << "Введите количество этажей для добавления к вашему зданию: ";
-		while (!(cin >> floorsToAdd) || floorsToAdd < 0)
+		while (!(cin >> floorsToAdd) || cin.get() != '\n' || floorsToAdd < 0)
 		{
 			cout << "Неверный ввод количества - оно должно быть неотрицательным целым числом. Попробуйте еще раз: ";
 			cin.clear();
+			rewind(stdin);
 		}
 
 		floorAmount = floorAmount + floorsToAdd;
@@ -144,7 +151,7 @@ public:
 		stabilityFactor = (float)(sideLength * sideLength * sqrt(basementHeight)) / (floorHeight * floorAmount);
 		if (stabilityFactor < 1.0)
 		{
-			cout << "Коэффициент стабильности вашего здания k = " << stabilityFactor << " стал меньше единицы. Оно может рухнуть с минуты на минуту. Попробуйте изменить количество этажей к добавлению (например, на 0)" << endl << endl;
+			cout << "Коэффициент стабильности вашего здания k = " << stabilityFactor << " стал меньше единицы.\nОно может рухнуть с минуты на минуту. Попробуйте изменить количество этажей к добавлению (например, на 0)" << endl << endl;
 			floorAmount = floorAmount - floorsToAdd;
 			addFloors();
 		}
@@ -159,19 +166,21 @@ public:
 	// Функция по удалению floorsToRemove этажей у экземпляра структуры Building, на кторый указывает b.
 	void removeFloors()
 	{
-		unsigned floorsToRemove;
+		int floorsToRemove;
 		// Защита от дурака для ввода floorsToRemove.
 		cout << "Введите количество этажей для удаления с вашего здания: ";
-		while (!(cin >> floorsToRemove) || floorsToRemove < 0 || floorsToRemove >= floorAmount)
+		while (!(cin >> floorsToRemove) || cin.get() != '\n' || floorsToRemove < 0 || floorsToRemove >= floorAmount)
 		{
 			cout << "Неверный ввод количества - оно должно быть неотрицательным целым числом и меньшим общего числа этажей. Попробуйте еще раз: ";
 			cin.clear();
+			rewind(stdin);
 		}
 		// Расчет нового коэффициента устойчивости.
 		floorAmount = floorAmount - floorsToRemove;
+		stabilityFactor = (float)(sideLength * sideLength * sqrt(basementHeight)) / (floorHeight * floorAmount);
 		cout << "Этажи успешно удалены!" << endl;
 		// Отображение информации о здании.
 		getBuilding();
 	}
 
-};*/
+};

@@ -25,7 +25,7 @@ int main()
 	/* Работа с динамическими экземплярами класса. */
 	Building* firstDynamicB = new Building;
 	Building* secondDynamicB;
-
+	// Выделение памяти через malloc.
 	secondDynamicB = (Building*)malloc(sizeof(Building));
 
 	cout << "Динамические экземпляры: " << endl << endl;
@@ -37,7 +37,7 @@ int main()
 
 	firstDynamicB->addFloors();
 	firstDynamicB->removeFloors();
-
+	// Очистка памяти двумя разными способами.
 	delete firstDynamicB;
 	free(secondDynamicB);
 	/*............................................*/
@@ -66,10 +66,34 @@ int main()
 			(secondDynamicArray + 3)->getBuilding();
 		}
 	}
-
+	// Очистка памяти двумя разными способами.
 	delete[] firstDynamicArray;
 	free(secondDynamicArray);
 	/*...............................*/
 
+	/* Массив динамических объектов. */
+	Building* firstArrayOfDyn[2], *secondArrayOfDyn[2];
+	for (int i = 0; i < 2; i++)
+	{
+		// Выделение памяти двумя разными способами.
+		firstArrayOfDyn[i] = new Building;
+		secondArrayOfDyn[i] = (Building*)malloc(sizeof(Building));
+	}
+
+	cout << "Массив динамических объектов: " << endl << endl;
+
+	firstArrayOfDyn[0]->inputBuilding();
+	secondArrayOfDyn[1]->initBuilding();
+
+	firstArrayOfDyn[0]->addToBuilding(*secondArrayOfDyn[1]);
+
+	for (int i = 0; i < 2; i++)
+	{
+		// Очистка памяти двумя разными способами.
+		delete firstArrayOfDyn[i];
+		free(secondArrayOfDyn[i]);
+	}
+	/*..............................*/
+	cin.get();
 	return 0;
 }

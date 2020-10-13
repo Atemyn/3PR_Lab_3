@@ -19,7 +19,7 @@ private:
 	int floorAmount;
 	// Коэффициент устойчивости.
 	float stabilityFactor;
-
+	/* Функция по установке переданных значений в свойства экземпляра класса Building. */
 	void setBuiling(float b_sideLength, float b_basementHeight, float b_floorHeight, unsigned b_floorAmount, float b_stabilityFactor)
 	{
 		sideLength = b_sideLength;
@@ -28,9 +28,8 @@ private:
 		floorAmount = b_floorAmount;
 		stabilityFactor = b_stabilityFactor;
 	}
-
 public:
-
+	/* Функция по выводу свойств экземпляра класса Building. */
 	void getBuilding()
 	{
 		cout << "Свойства данного здания:" << endl;
@@ -40,12 +39,12 @@ public:
 		cout << "Количество этажей: " << floorAmount << endl;
 		cout << "Коэффициент устойчивости: " << stabilityFactor << endl << endl;
 	}
-
+	/* Функция по заданию свойств по умолчанию экземпляра класса Building. */
 	void initBuilding()
 	{
 		setBuiling(1.0, 1.0, 1.0, 1, 1.0);
 	}
-
+	/* Функция по вводу с клавиатуры свойств для экземпляра класса Building */
 	void inputBuilding()
 	{
 		// Защиты от дурака для ввода всех необходимых данных.
@@ -102,7 +101,7 @@ public:
 			cout << "Отлично! Здание получилось устойчивым с коэффициентом устойчивости k = " << stabilityFactor << "." << endl << endl << endl;
 		}
 	}
-
+	/* Функция по сложению двух экземпляров класса Building, где build - экземпляр, который будет прибавляться. */
 	void addToBuilding(Building build)
 	{
 		cout << "Совмещаем два здания... Их свойства такие:" << endl;
@@ -133,7 +132,7 @@ public:
 			getBuilding();
 		}
 	}
-
+	/* Функция по добавлению floorsToAdd этажей экземпляру класса Building. */
 	void addFloors()
 	{
 		unsigned floorsToAdd;
@@ -163,7 +162,7 @@ public:
 		getBuilding();
 	}
 
-	// Функция по удалению floorsToRemove этажей у экземпляра структуры Building, на кторый указывает b.
+	/* Функция по удалению floorsToRemove этажей у экземпляра класса Building. */
 	void removeFloors()
 	{
 		int floorsToRemove;
